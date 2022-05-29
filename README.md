@@ -6,6 +6,14 @@ Esta página é dedicada à publicar os trabalhos realizados para a disciplina d
 
 ### 1.1. Inverter Cores da Região Especificada
 
+Primeiramente, pegaremos a imagem do personagem Maui de Moana para realizar a primeira manipulação, a de selecionar a área de um retângulo dentro da imagem a qual determinará a área que terá as cores invertidas.
+<div align="center">
+<img src="imgs/maui.jpg" alt="Imagem Original" width="600"/>
+</div>
+<div align="center">
+<figcaption>Imagem Original</figcaption>
+</div>
+
 ```python
 from tempfile import tempdir
 import numpy as np
@@ -19,6 +27,9 @@ def showImage( img ):
 def getColor(img, i, j):
     return img.item(i, j, 0), img.item(i, j, 1), img.item(i, j, 2)
 
+```
+O programa começa chamando as bibliotecas necessárias, criando uma função ```showImage()```, usada apenas para plotar a imagem recebida como parâmetro, e a função ```getColor()```, a qual armazenas os canais de cores da imagem separadamente.
+```python
 def setColor(img, i, j, b, g, r):
     img.itemset((i, j, 0), b)
     img.itemset((i, j, 1), g)
@@ -49,6 +60,14 @@ showImage(invertRegions(img))
     
     
 ```
+Em seguida, a função ```setColor()``` seleciona a área a ser modificada de acordo com os inputs do usuário usando a função ```invertRegions()```, a qual também realiza a inversão das cores ponto a ponto com o looping. Ao final de tudo, a imagem será salva em tons de cinza e com as cores invertidas, como no exemplo abaixo:
+
+<div align="center">
+<img src="imgs/maui_inverted.png" alt="Imagem com Cores Invertidas" width="600"/>
+</div>
+<div align="center">
+<figcaption>Imagem com cores invertidas e em tons de cinza</figcaption>
+</div>
 
 ### 1.2. Trocar Regiões
 
