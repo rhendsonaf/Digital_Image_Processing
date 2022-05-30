@@ -69,7 +69,9 @@ Em seguida, a função ```setColor()``` seleciona a área a ser modificada de ac
 <figcaption>Imagem com cores invertidas e em tons de cinza</figcaption>
 </div>
 
-### 1.2. Trocar Regiões
+### 1.2. Trocar Regiões da Imagem
+
+Se baseando novamente na mesma imagem original, este algoritmo troca posições dividindo a imagem em 4 pedaços iguais e embaralhando-os. Para isso, as mesmas bibliotecas do exercício 1.1 serão usadas.
 
 ```python
 from tempfile import tempdir
@@ -80,15 +82,6 @@ def showImage( img ):
     from matplotlib import pyplot as plt
     plt.imshow(img)
     plt.show()
-    
-def getColor(img, i, j):
-    return img.item(i, j, 0), img.item(i, j, 1), img.item(i, j, 2)
-
-def setColor(img, i, j, b, g, r):
-    img.itemset((i, j, 0), b)
-    img.itemset((i, j, 1), g)
-    img.itemset((i, j, 2), r)
-    return 
 
 def cutOffQuarter( img, quarter ):
     altura, largura = img.shape
@@ -106,6 +99,9 @@ def cutOffQuarter( img, quarter ):
         return third_quarter 
     elif quarter == 4 :    
         return fourth_quarter 
+```
+A primeira grande mudança em relação ao exercício anterior é a função ```cutOffQuarter()``` a qual divide a imagem original em 4 pedaços iguais usando metade da altura e de largura para realizar os cortes nomeados de 1 a 4.
+```python
 
 def trocaRegioes( img ):
     cv.imwrite("imgs/temp_shift.png", img)
@@ -120,35 +116,18 @@ def trocaRegioes( img ):
 
     return tempImg
 
-def invertRegions( img ):
-    y1 = input('y1: ')
-    x1 = input('x1: ')
-    y2 = input('y2: ')
-    x2 = input('x2: ')
-
-    rectangle = img[int(y1):int(y2), int(x1):int(x2)]
-    altura, largura = rectangle.shape
-
-    for i in range (0, altura):
-        for j in range(0, largura):
-            rectangle.itemset((i, j), 255-(rectangle.item(i, j)))
-
-    img[int(y1):int(y2), int(x1):int(x2)] = rectangle
-
-    cv.imwrite("imgs/maui_inverted.png", img)
-
-    return img
-    
 def main():
     img = cv.imread("imgs/maui.jpg", 0)
     cv.imwrite("imgs/maui_shifted.png", trocaRegioes(img))
     showImage(trocaRegioes(img))
 
-
-#main()
-
-img = cv.imread("imgs/maui.jpg", 0)
-showImage(invertRegions(img))
-    
-    
+main()
 ```
+A segunda grande parte do algoritmo é focado na função ```trocaRegioes()```, que pega os parâmetros obtidos por meio da função anterior ao calcular o tamanho de pixels máximos de altura e largura, copia a imagem original em tons de cinza para um arquivo temporário de imagem ```temp_sift.png``` e usar ela de base para trocar a posição dos pedaços gerados e salvar o resultado em uma outra imagem, disponível abaixo:
+
+<div align="center">
+<img src="imgs/maui_shifted.png" alt="Imagem com Regiões Trocadas" width="600"/>
+</div>
+<div align="center">
+<figcaption>Imagem com cores invertidas e em tons de cinza</figcaption>
+</div>
